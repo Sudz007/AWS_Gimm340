@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character List</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="characters.css" />
+</head>
+
+<body>
+<!-- Filters Section -->
+<div class="container mt-5">
+
+  <div class="mb-4">
+    <h4 class="text-center mb-3">Filter Characters</h4>
+    <div class="row justify-content-center g-3">
+      <!-- your filters exactly as you already have them -->
+      <div class="col-md-3 col-6">
+        <input type="text" id="searchName" class="form-control" placeholder=" Search by Name">
+      </div>
+      <div class="col-md-2 col-6">
+        <select id="sortField" class="form-select">
+          <option value="">↕ Sort By</option>
+          <option value="name-ASC">Name A → Z</option>
+          <option value="name-DESC">Name Z → A</option>
+          <option value="age-ASC">Age Low → High</option>
+          <option value="age-DESC">Age High → Low</option>
+          <option value="nationality-ASC">Nationality A → Z</option>
+          <option value="nationality-DESC">Nationality Z → A</option>
+        </select>
+      </div>
+
+      <div class="col-md-2 col-6">
+        <select id="limitField" class="form-select">
+          <option value="">Limit Results</option>
+          <option value="10">10</option>
+          <option value="25">25</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+      </div>
+
+      
+      <div class="col-md-2 col-6">
+        <select id="filterArc" class="form-select">
+          <option value="">Filter by Arc</option>
+        </select>
+      </div>
+      <div class="col-md-2 col-6">
+        <select id="filterRole" class="form-select">
+          <option value="">Filter by Role</option>
+          <option value="Protagonist">Protagonist</option>
+          <option value="Major Antagonist">Major Antagonist</option>
+          <option value="Minor Antagonist">Minor Antagonist</option>
+          <option value="Major Character">Major Character</option>
+          <option value="Minor Character">Minor Character</option>
+        </select>
+      </div>
+      <div class="col-md-2 col-6">
+        <select id="filterGender" class="form-select">
+          <option value="">Filter by Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Non-Binary">Non-Binary</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="col-md-2 col-6">
+        <select id="filterNationality" class="form-select">
+          <option value="">Filter by Nationality</option>
+          <option value="Spanish">Spanish</option>
+          <option value="Russian">Russian</option>
+          <option value="English">English</option>
+          <option value="Slovacian">Slovacian</option>
+          <option value="Hungarian">Hungarian</option>
+          <option value="Roman">Roman</option>
+          <option value="Persian">Persian</option>
+          <option value="German">German</option>
+          <option value="Greek">Greek</option>
+          <option value="Turkish">Turkish</option>
+          <option value="Egyptian">Egyptian</option>
+          <option value="Indian">Indian</option>
+          <option value="Bulgarian">Bulgarian</option>
+          <option value="Croatian">Croatian</option>
+          <option value="Bosnian">Bosnian</option>
+          <option value="Georgian">Georgian</option>
+          <option value="Ethiopian">Ethiopian</option>
+          <option value="Byzantine">Byzantine</option>
+          <option value="Scythian">Scythian</option>
+          <option value="Celtic">Celtic</option>
+          <option value="Assyrian">Assyrian</option>
+        </select>
+      </div>
+    </div>
+  </div>
+    <h2>Character List</h2>
+
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped mt-4">
+        <thead>
+          <tr>
+            <th>Character Name</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Nationality</th>
+            <th>Role</th>
+            <th>Backstory</th>
+            <th>Arcs</th>
+            <th># of Chapters</th>
+            <th>Chapter Summary</th>
+            <th>Image</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="characterTableBody">
+          <!-- Characters will be dynamically inserted here -->
+        </tbody>
+      </table>
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="insert.html" class="btn btn-success">Add New Character</a>
+    </div>
+  </div>
+
+  <script>
+    const searchNameInput = document.getElementById('searchName');
+const filterArcInput = document.getElementById('filterArc');
+const filterRoleInput = document.getElementById('filterRole');
+const filterGenderInput = document.getElementById('filterGender');
+const filterNationalityInput = document.getElementById('filterNationality');
+const sortFieldInput = document.getElementById('sortField');
+const limitFieldInput = document.getElementById('limitField');
+
+
+
+
+// Dynamic fetch of arcs (already in your /unholy/ fetch)
+fetch("/unholy/", { method: 'GET' })
+  .then((response) => response.json())
+  .then((json) => {
+    const arcs = json.arcs;
+    for (const arc of arcs) {
+      const option = document.createElement('option');
+      option.value = arc.arc_name; // Important! Using arc name
+      option.text = arc.arc_name;
+      filterArcInput.appendChild(option);
+    }
+  });
+
+  
+// When user changes filter, reload characters
+[searchNameInput, filterArcInput, filterRoleInput, filterGenderInput, filterNationalityInput, sortFieldInput, limitFieldInput]
+  .forEach(input => input.addEventListener('input', fetchAndDisplayCharacters));
+
+  function fetchAndDisplayCharacters() {
+  const params = new URLSearchParams();
+
+  // Add search/filter parameters if they exist
+  if (searchNameInput.value.trim() !== '') {
+    params.append('name', searchNameInput.value.trim());
+  }
+  if (filterArcInput.value.trim() !== '') {
+    params.append('arc', filterArcInput.value.trim());
+  }
+  if (filterRoleInput.value.trim() !== '') {
+    params.append('role', filterRoleInput.value.trim());
+  }
+  if (filterGenderInput.value.trim() !== '') {
+    params.append('gender', filterGenderInput.value.trim());
+  }
+  if (filterNationalityInput.value.trim() !== '') {
+    params.append('nationality', filterNationalityInput.value.trim());
+  }
+
+  // Add sort field if selected
+  if (sortFieldInput.value.trim() !== '') {
+    const [field, direction] = sortFieldInput.value.split('-');
+    params.append('sortField', field);
+    params.append('sortDirection', direction);
+  }
+
+  // Add limit if selected
+  if (limitFieldInput.value.trim() !== '') {
+    params.append('limit', limitFieldInput.value.trim());
+  }
+
+  // Fetch from server with query string
+  fetch(`/unholy/?${params.toString()}`, { method: 'GET' })
+    .then(response => response.json())
+    .then(({ characters }) => {
+      const tableBody = document.getElementById('characterTableBody');
+      tableBody.innerHTML = '';
+
+      if (!characters || characters.length === 0) {
+        tableBody.innerHTML = '<tr><td colspan="11" class="text-center">No characters found</td></tr>';
+        return;
+      }
+
+      for (const character of characters) {
+        const row = document.createElement('tr');
+        const imageUrl = character.image ? 'data:image/jpeg;base64,' + character.image : '#';
+
+        row.innerHTML = `
+          <td>${character.name}</td>
+          <td>${character.age}</td>
+          <td>${character.gender}</td>
+          <td>${character.nationality}</td>
+          <td>${character.role}</td>
+          <td>${character.backstory}</td>
+          <td>${character.arcs || 'N/A'}</td>
+          <td>${character.arcChapters || 'N/A'}</td>
+          <td>${character.chapterSummary || 'N/A'}</td>
+          <td><img src="${imageUrl}" alt="Character Image" class="thumbnail" style="width: 50px; height: 50px; object-fit: cover;"></td>
+          <td>
+            <a href="edit.html?id=${character.characterId}" class="btn btn-primary btn-sm">Edit</a>
+            <button class="btn btn-danger btn-sm delete-btn" data-id="${character.characterId}">Delete</button>
+          </td>
+        `;
+        tableBody.appendChild(row);
+      }
+    })
+    .catch(error => {
+      console.error('Error fetching characters:', error);
+    });
+}
+
+
+    // Fetch data from the server and populate the table
+    fetch('/unholy/', { method: 'GET' })
+      .then((response) => {
+        return new Promise((resolve) => response.json()
+          .then((json) => resolve({
+            status: response.status,
+            json,
+          }))
+        );
+      })
+      .then(({ status, json }) => {
+        console.log(status, json);
+
+        if (200 === status) {
+          const tableBody = document.getElementById('characterTableBody');
+          if (json.characters && json.characters.length > 0) {
+
+            for (const character of json.characters) {
+              const row = document.createElement('tr');
+
+              const imageUrl = character.image ? 'data:image/jpeg;base64,' + character.image : '#';
+
+              row.innerHTML = `
+                <td>${character.name}</td>
+                <td>${character.age}</td>
+                <td>${character.gender}</td>
+                <td>${character.nationality}</td>
+                <td>${character.role}</td>
+                <td>${character.backstory}</td>
+                <td>${character.arcs || 'N/A'}</td>
+                <td>${character.arcChapters || 'N/A'}</td>
+                <td>${character.chapterSummary || 'N/A'}</td>
+                <td><img src="${imageUrl}" alt="Character Image" class="thumbnail" style="width: 50px; height: 50px; object-fit: cover;"></td>
+                <td>
+                  <a href="edit.html?id=${character.characterId}" class="btn btn-primary btn-sm">Edit</a>
+                   <a href="delete.html?id=${character.characterId}" class="btn btn-danger btn-sm">Delete</a>
+                </td>
+              `;
+
+              tableBody.appendChild(row);
+            }
+
+          
+          }
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

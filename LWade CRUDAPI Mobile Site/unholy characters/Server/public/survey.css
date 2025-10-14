@@ -1,0 +1,170 @@
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Body Styling */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #2b2a2a; 
+  font-family: "Georgia", serif; 
+  color: #f5e6cc; 
+}
+
+
+.card {
+  max-width: 40rem;
+  background: #3e3b3b; 
+  margin: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 0.75rem;
+  width: 100%;
+}
+
+/* Form Questions */
+.card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #f5e6cc;
+}
+
+/* Form Options */
+.card label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: #d8c3a5;
+}
+
+.card input[type="radio"],
+.card input[type="checkbox"] {
+  margin-right: 0.5rem;
+}
+
+/* Radio and Checkbox Styling */
+.card input[type="radio"]:checked + label::before,
+.card input[type="checkbox"]:checked + label::before {
+  background-color: #8b0000; 
+  border-color: #8b0000; 
+}
+
+.form-check-input:checked {
+  background-color: #8b0000; 
+  border-color: #8b0000; 
+}
+
+.form-check-input:focus {
+  box-shadow: 0 0 0 0.25rem rgba(139, 0, 0, 0.25); 
+}
+
+/* Submit Button */
+.card button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.2rem;
+  color: #fff; /* White text */
+  background: #8b0000; /* Blood red background */
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.card button:hover {
+  background: #a40000; 
+}
+
+/* Override Bootstrap Primary Color */
+.btn-primary {
+  color: #fff !important; 
+  background-color: #8b0000 !important;
+  border-color: #8b0000 !important; 
+}
+
+.btn-primary:hover {
+  background-color: #a40000 !important; 
+  border-color: #a40000 !important; 
+}
+
+.d-flex {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+select {
+  background: #9b9890; 
+  color: #f5e6cc; 
+  border: 1px solid #d8c3a5; 
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+select:hover {
+  background: #8b0000; 
+  color: #fff; 
+  border-color: #8b0000; 
+}
+
+option:checked {
+  background-color: #8b0000;
+  color: #fff; 
+}
+
+/* Text Box Focus Effect */
+input[type="text"]:focus,
+input[type="number"]:focus,
+textarea:focus {
+  outline: none;
+  border-color: #8b0000; 
+  box-shadow: 0 0 5px rgba(139, 0, 0, 0.5); 
+}
+
+/* Delete Page Styling */
+.delete-container {
+  background: #3e3b3b;
+  padding: 2rem;
+  margin-top: 3rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  max-width: 30rem;
+  width: 90%;
+}
+
+.delete-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: #f5e6cc;
+}
+
+.delete-container p {
+  font-size: 1.2rem;
+  color: #d8c3a5;
+  margin-bottom: 2rem;
+}
+
+.delete-container button {
+  margin: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.1rem;
+  color: #fff;
+  background: #8b0000;
+  border: none;
+  border-radius: 0.5rem;
+  transition: background 0.3s ease;
+  width: 45%;
+}
+
+.delete-container button:hover {
+  background: #a40000;
+}
