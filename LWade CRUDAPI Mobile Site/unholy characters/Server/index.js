@@ -11,7 +11,7 @@ const app = express();
 app.use(express.static('public'));
 const storage = multer.memoryStorage(); // Store uploaded files in memory
 const upload = multer({ storage: storage });
-const port = 80;
+const port = 3000;
 
 // JSON of characters from the database
 app.get('/character/', upload.none(), async (request, response) => {
