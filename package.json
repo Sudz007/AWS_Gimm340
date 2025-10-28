@@ -4,8 +4,9 @@
   "description": "demo from 285",
   "main": "index.js",
   "scripts": {
-    "test": "{"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/Sudz007/AWS_Gimm340.git"
