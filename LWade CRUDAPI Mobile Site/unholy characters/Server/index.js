@@ -8,7 +8,7 @@ const { characterNameValidation, characterAgeValidation, genderValidation, natio
 
 // Setup defaults for script
 const app = express();
-app.use(cors());
+//app.use(cors());
 app.use(express.static("public"));
 const storage = multer.memoryStorage(); // Store uploaded files in memory
 const upload = multer({ storage: storage });
