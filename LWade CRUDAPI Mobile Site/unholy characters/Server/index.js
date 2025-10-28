@@ -91,7 +91,7 @@ app.post(
 
         try {
             const newCharacter = {
-                name: request.body.characterName || null, // 🔥 Map properly
+                name: request.body.characterName || null,
                 age: request.body.characterAge || null,
                 gender: request.body.gender || null,
                 nationality: request.body.nationality || null,
@@ -106,7 +106,7 @@ app.post(
             };
               
 
-            console.log('Data being inserted:', newCharacter); // 🔥 Double check!
+            console.log('Data being inserted:', newCharacter);
 
             await unholy.insert(newCharacter);
             response.json({ 'data': 'Character added successfully!' });
