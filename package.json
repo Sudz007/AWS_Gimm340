@@ -1,0 +1,23 @@
+{
+  "name": "340repo",
+  "version": "1.0.0",
+  "description": "demo from 285",
+  "main": "index.js",
+  "scripts": {
+    "test": "{"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/Sudz007/AWS_Gimm340.git"
+  },
+  "keywords": [
+    "character",
+    "creator"
+  ],
+  "author": "Lauryn Wade",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Sudz007/AWS_Gimm340/issues"
+  },
+  "homepage": "https://github.com/Sudz007/AWS_Gimm340#readme"
+}
